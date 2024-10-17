@@ -32,6 +32,11 @@
       <artifactId>lombok</artifactId>
         <version>1.18.32</version>
     </dependency>
+<!-- Actuator (opcional, para monitoreo del estado del servidor) -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
