@@ -8,11 +8,12 @@ import lombok.Setter;
 
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Getter
 @Setter
-@Entity
+@Entity(name = "foro")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Foro {
 
     @Id
@@ -21,8 +22,7 @@ public class Foro {
 
     private String titulo;
 
-    @OneToMany(mappedBy = "foro", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "foro", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
-
 
 }
