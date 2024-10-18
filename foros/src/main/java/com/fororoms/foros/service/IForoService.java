@@ -16,4 +16,5 @@ public interface IForoService {
 
     void eliminarForo(Long id);
 
+
 }
