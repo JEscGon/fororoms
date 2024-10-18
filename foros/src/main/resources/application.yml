@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: foros
+  config: #Configuracion del servidor de configuracion
+    import: optional:configserver:http://localhost:8888
+  datasource: #Configuracion de la base de datos y jpa
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/fororoms-foros #Crear BD fororoms-foros
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: mysql
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+eureka: #Cliente Eureka configuracion
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+server:
+  port: 8001
+
