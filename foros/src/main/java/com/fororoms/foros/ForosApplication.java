@@ -8,8 +8,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 public class ForosApplication {
 	public static void main(String[] args) {
-
 		SpringApplication.run(ForosApplication.class, args);
-
 	}
 }
