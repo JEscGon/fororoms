@@ -22,6 +22,7 @@ public class Mensaje {
     private String contenido;
     private String autor;
     private LocalDateTime fechaPublicacion;
+    private LocalDateTime fechaEdicion;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id",nullable = false)
