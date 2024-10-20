@@ -16,8 +16,8 @@ public class ForoController {
     @Autowired
     private IForoService foroService;
 
-    @PostMapping("/crear")
-        public ResponseEntity<Foro> crearForo(@RequestBody Foro foro) {
+    @PostMapping
+    public ResponseEntity<Foro> crearForo(@RequestBody Foro foro) {
         Foro nuevoForo = foroService.crearForo(foro);
         return ResponseEntity.ok(nuevoForo);
     }
@@ -28,7 +28,7 @@ public class ForoController {
         return ResponseEntity.ok(foro);
     }
 
-    @GetMapping
+    @GetMapping("/find")
     public ResponseEntity<List<Foro>> listarForos() {
         List<Foro> foros = foroService.obtenerForos();
         return ResponseEntity.ok(foros);

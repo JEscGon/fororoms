@@ -33,7 +33,7 @@ public class ForoServiceIMPL implements IForoService {
     public Foro actualizarForo(Long id, Foro foro) {
         Foro aux = obtenerForoPorId(id);
         aux.setTitulo(foro.getTitulo());
-        aux.setPosts(foro.getPosts());
+//        aux.setPosts(foro.getPosts());
         return foroRepository.save(aux);
     }
 

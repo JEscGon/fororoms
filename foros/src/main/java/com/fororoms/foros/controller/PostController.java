@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/foros/{foroId}/posts")
+@RequestMapping("/api/foros/{foroId}")
 public class PostController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class PostController {
     }
 
     // Listar todos los posts de un foro
-    @GetMapping
+    @GetMapping("/posts")
     public ResponseEntity<List<Post>> listarPostsPorForo(@PathVariable Long foroId) {
         List<Post> posts = postService.listarPostsPorForo(foroId);
         return ResponseEntity.ok(posts);
@@ -49,5 +49,4 @@ public class PostController {
         postService.eliminarPost(postId);
         return ResponseEntity.noContent().build();
     }
-
 }

@@ -22,7 +22,7 @@ public class Foro {
 
     private String titulo;
 
-    @OneToMany(mappedBy = "foro", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Post> posts;
+//    @OneToMany(mappedBy = "foro", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Post> posts;
 
 }
