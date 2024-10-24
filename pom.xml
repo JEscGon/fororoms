@@ -39,6 +39,12 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
+  <!-- Swagger/OpenAPI dependencies -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.7.0</version> <!-- Verifica la última versión disponible -->
+        </dependency>
   </dependencies>
 
   <build>

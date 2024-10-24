@@ -69,7 +69,7 @@ public class PostServiceIMPL  implements IPostService {
     @Transactional
     public void eliminarPost(Long id) {
         // Primero, elimina los mensajes relacionados
-        mensajeRepository.deleteAllByPostId(id); // Asegúrate de tener este método en tu repositorio
+        mensajeRepository.deleteAllByPostId(id);
         // Luego, elimina el post
         postRepository.deleteById(id);
     }
