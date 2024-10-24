@@ -1,10 +1,7 @@
 package com.fororoms.foros.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -21,7 +18,10 @@ public class Mensaje {
 
     private String contenido;
     private String autor;
+
+    @Setter(AccessLevel.NONE)
     private LocalDateTime fechaPublicacion;
+
     private LocalDateTime fechaEdicion;
 
     @ManyToOne(fetch = FetchType.LAZY)

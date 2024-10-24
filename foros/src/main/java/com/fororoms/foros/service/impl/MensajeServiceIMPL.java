@@ -24,7 +24,7 @@ public class MensajeServiceIMPL  implements IMensajeService {
     public Mensaje crearMensaje(Long postId, Mensaje mensaje) {
         Post post = postRepository.findById(postId)
             .orElseThrow(() -> new RuntimeException("Post no encontrado")); // Excepcion si no se encuentra el post
-        mensaje.setPost(post);  // Asigna el post al mensaje
+        mensaje.setPost(post);
         return mensajeRepository.save(mensaje);
     }
 
@@ -48,7 +48,6 @@ public class MensajeServiceIMPL  implements IMensajeService {
 
         mensajeExistente.setContenido(mensajeActualizado.getContenido());
         mensajeExistente.setAutor(mensajeActualizado.getAutor());
-        mensajeExistente.setFechaPublicacion(mensajeActualizado.getFechaPublicacion());
         mensajeExistente.setFechaEdicion(LocalDateTime.now());
 
         return mensajeRepository.save(mensajeExistente);

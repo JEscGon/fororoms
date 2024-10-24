@@ -16,4 +16,6 @@ public interface IPostService {
 
     void eliminarPost(Long id);
 
+    List<Post> listarPosts();
+
 }

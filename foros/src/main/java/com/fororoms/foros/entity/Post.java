@@ -1,11 +1,9 @@
 package com.fororoms.foros.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,6 +14,7 @@ import java.util.List;
 @Entity(name = "post")
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Post {
 
     @Id
@@ -26,13 +25,14 @@ public class Post {
 
     private String contenido;
 
+    //@Setter(AccessLevel.NONE)
     private LocalDateTime fechaCreacion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "foro_id", nullable = false)
     private Foro foro;
 
      // Almacenamos solo el ID del usuario, no la entidad Usuario (Feign Client para comunicación con el servicio de usuarios)
-    private Long usuarioId;
+    private Long usuario_Id;
 
 }

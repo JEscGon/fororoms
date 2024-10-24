@@ -12,6 +12,7 @@ INSERT INTO post (titulo, contenido, foro_id) VALUES
 -- Insertar datos en la tabla mensaje
 INSERT INTO mensaje (contenido, post_id) VALUES
 ('¡Excelente artículo! Me encantó la parte sobre las tendencias en IA.', 1),
+('Estoy de acuerdo, la IA es un campo muy emocionante.', 1),
 ('Estoy de acuerdo, el desarrollo web está evolucionando rápidamente.', 2),
 ('Gran análisis de los resultados. ¿Qué opinan del próximo partido?', 3),
 ('Me encantan las jugadas de la NBA, especialmente las de este año.', 4),
