@@ -11,7 +11,6 @@
         <module name="foros" />
         <module name="usuarios" />
         <module name="eureka-server" />
-        <module name="gateway" />
       </profile>
     </annotationProcessing>
   </component>
@@ -20,7 +19,6 @@
       <module name="config-server" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="foros" options="-parameters" />
-      <module name="gateway" options="-parameters" />
       <module name="usuarios" options="-parameters" />
     </option>
   </component>
