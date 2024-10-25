@@ -20,6 +20,7 @@
         <module>config-server</module>
         <module>foros</module>
         <module>usuarios</module>
+        <module>gateway</module>
     </modules>
 
   <properties>
