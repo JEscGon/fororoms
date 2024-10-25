@@ -7,9 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="foros" />
-        <module name="eureka-server" />
         <module name="config-server" />
+        <module name="foros" />
+        <module name="usuarios" />
+        <module name="eureka-server" />
       </profile>
     </annotationProcessing>
   </component>
@@ -18,6 +19,7 @@
       <module name="config-server" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="foros" options="-parameters" />
+      <module name="usuarios" options="-parameters" />
     </option>
   </component>
 </project>

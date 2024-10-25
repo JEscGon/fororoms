@@ -9,11 +9,11 @@
 	</parent>
 
 	<groupId>com.fororoms</groupId>
-	<artifactId>foros</artifactId>
+	<artifactId>usuarios</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>foros</name>
-	<description>MSVC - FOROROMS - FOROS</description>
+	<name>usuarios</name>
+	<description>MSCV - FOROROMS - USUARIOS</description>
 
 	<properties>
 		<java.version>17</java.version>
@@ -25,6 +25,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+<!-- Security (Opt)-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 <!-- Web -->
 		<dependency>
@@ -41,11 +46,6 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-<!-- Feign Client -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency>
 <!-- MapStruct para el mapeo entre entidades y DTOS -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
@@ -53,20 +53,29 @@
 			<version>1.5.2.Final</version>
 			<scope>provided</scope>
 		</dependency>
+<!-- Feign Client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
 <!-- MySQL BD -->
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-<!--Testing -->
+<!-- Test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
