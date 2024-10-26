@@ -5,10 +5,12 @@ import com.fororoms.usuarios.repository.UsuarioRepository;
 import com.fororoms.usuarios.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class UsuarioServiceIMPL implements IUsuarioService {
 
     @Autowired
@@ -35,14 +37,14 @@ public class UsuarioServiceIMPL implements IUsuarioService {
 
     @Override
     public Usuario actualizarUsuario(Long id, Usuario usuario) {
-        return null;
+        Usuario aux = usuarioRepository.findById(id).orElseThrow();
+        aux.setUsername(usuario.getUsername());
+        aux.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        return usuarioRepository.save(aux);
     }
 
     @Override
     public List<Usuario> obtenerUsuarios() {
-        return List.of();
+        return usuarioRepository.findAll();
     }
-
-
-
 }
