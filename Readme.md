@@ -6,7 +6,7 @@
     · Spring Web: Creación de aplicaciones web.
     · Spring Data JPA: Persistencia de datos.
     · MySQL Driver: Conector de MySQL.
-    · MapStruct: Mapeo de objetos. DTOS.
+    · ModelMapper: Mapeo de objetos. DTOS.
     · Flyway: Version de controles de BD , Migracion.
 
     · Eureka Server: Servidor de registro y descubrimiento.
