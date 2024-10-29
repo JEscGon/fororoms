@@ -1,6 +1,6 @@
 package com.fororoms.foros.service;
 
-import com.fororoms.foros.entity.Mensaje;
+import com.fororoms.foros.repository.entity.Mensaje;
 
 import java.util.List;
 

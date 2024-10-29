@@ -1,8 +1,7 @@
 package com.fororoms.foros.controller;
 
-import com.fororoms.foros.entity.Mensaje;
+import com.fororoms.foros.repository.entity.Mensaje;
 import com.fororoms.foros.service.IMensajeService;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

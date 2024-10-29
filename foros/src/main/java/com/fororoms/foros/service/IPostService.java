@@ -1,6 +1,6 @@
 package com.fororoms.foros.service;
 
-import com.fororoms.foros.entity.Post;
+import com.fororoms.foros.repository.entity.Post;
 
 import java.util.List;
 

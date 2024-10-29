@@ -1,4 +1,4 @@
-package com.fororoms.foros.entity;
+package com.fororoms.foros.repository.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Getter

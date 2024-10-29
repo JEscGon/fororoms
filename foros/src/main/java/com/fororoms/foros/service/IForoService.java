@@ -1,18 +1,20 @@
 package com.fororoms.foros.service;
 
-import com.fororoms.foros.entity.Foro;
+import com.fororoms.foros.controller.dto.ForoRequest;
+import com.fororoms.foros.controller.dto.ForoResponse;
+import com.fororoms.foros.service.domain.ForoDomain;
 
 import java.util.List;
 
 public interface IForoService {
 
-    Foro crearForo(Foro foro);
+    ForoDomain crearForo(ForoDomain foro);
 
-    Foro obtenerForoPorId(Long id);
+    ForoDomain obtenerForoPorId(Long id);
 
-    List<Foro> obtenerForos();
+    List<ForoDomain> obtenerForos();
 
-    Foro actualizarForo(Long id, Foro foro);
+    ForoDomain actualizarForo(Long id, ForoDomain foroRequest);
 
     void eliminarForo(Long id);
 

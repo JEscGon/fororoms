@@ -1,7 +1,7 @@
 package com.fororoms.foros.repository;
 
-import com.fororoms.foros.entity.Foro;
-import com.fororoms.foros.entity.Post;
+import com.fororoms.foros.repository.entity.Foro;
+import com.fororoms.foros.repository.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

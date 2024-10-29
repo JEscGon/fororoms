@@ -1,8 +1,6 @@
 package com.fororoms.foros.controller;
 
-import com.fororoms.foros.entity.Foro;
-import com.fororoms.foros.entity.Post;
-import com.fororoms.foros.service.IForoService;
+import com.fororoms.foros.repository.entity.Post;
 import com.fororoms.foros.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -11,6 +11,7 @@
 	<groupId>com.fororoms</groupId>
 	<artifactId>foros</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<name>foros</name>
 	<description>MSVC - FOROROMS - FOROS</description>
@@ -46,12 +47,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
-<!-- MapStruct para el mapeo entre entidades y DTOS -->
+<!-- ModelMapper -->
 		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>1.5.2.Final</version>
-			<scope>provided</scope>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.0.0</version>
 		</dependency>
 <!-- MySQL BD -->
 		<dependency>

@@ -1,7 +1,7 @@
 package com.fororoms.foros.service.impl;
 
-import com.fororoms.foros.entity.Foro;
-import com.fororoms.foros.entity.Post;
+import com.fororoms.foros.repository.entity.Foro;
+import com.fororoms.foros.repository.entity.Post;
 import com.fororoms.foros.repository.ForoRepository;
 import com.fororoms.foros.repository.MensajeRepository;
 import com.fororoms.foros.repository.PostRepository;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Service

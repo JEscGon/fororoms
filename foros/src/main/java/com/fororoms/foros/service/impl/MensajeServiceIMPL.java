@@ -1,7 +1,7 @@
 package com.fororoms.foros.service.impl;
 
-import com.fororoms.foros.entity.Mensaje;
-import com.fororoms.foros.entity.Post;
+import com.fororoms.foros.repository.entity.Mensaje;
+import com.fororoms.foros.repository.entity.Post;
 import com.fororoms.foros.repository.MensajeRepository;
 import com.fororoms.foros.repository.PostRepository;
 import com.fororoms.foros.service.IMensajeService;
