@@ -2,7 +2,7 @@ package com.fororoms.foros.controller;
 
 
 import com.fororoms.foros.controller.dto.ForoRequest;
-import com.fororoms.foros.controller.dto.ForoResponse;
+import com.fororoms.foros.controller.dto.ForoDTO;
 import com.fororoms.foros.service.domain.ForoDomain;
 import com.fororoms.foros.service.impl.ForoService;
 import org.modelmapper.ModelMapper;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//Obj Domain --> Obj DTO
 @RestController
 @RequestMapping("/api/foros")
 public class ForoController {
@@ -24,35 +25,35 @@ public class ForoController {
     private ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<ForoResponse> crearForo(@RequestBody ForoRequest foroRequest) {
+    public ResponseEntity<ForoDTO> crearForo(@RequestBody ForoRequest foroRequest) {
         ForoDomain foroDomain = modelMapper.map(foroRequest, ForoDomain.class);
-        ForoDomain nuevoForo = foroService.crearForo(foroDomain);
-        ForoResponse foroResponse = modelMapper.map(nuevoForo, ForoResponse.class);
-        return ResponseEntity.ok(foroResponse);
+        foroService.crearForo(foroDomain);
+        ForoDTO foroDTO = modelMapper.map(foroDomain, ForoDTO.class);
+        return ResponseEntity.ok(foroDTO);
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<ForoResponse> findForoById(@PathVariable Long id) {
+    public ResponseEntity<ForoDTO> findForoById(@PathVariable Long id) {
         ForoDomain foroDomain = foroService.obtenerForoPorId(id);
-        ForoResponse foroResponse = modelMapper.map(foroDomain, ForoResponse.class);
-        return ResponseEntity.ok(foroResponse);
+        ForoDTO foroDTO = modelMapper.map(foroDomain, ForoDTO.class);
+        return ResponseEntity.ok(foroDTO);
     }
 
     @GetMapping("/find")
-    public ResponseEntity<List<ForoResponse>> listarForos() {
+    public ResponseEntity<List<ForoDTO>> listarForos() {
         List<ForoDomain> foros = foroService.obtenerForos();
-        List<ForoResponse> foroResponses = foros.stream()
-                .map(foroDomain -> modelMapper.map(foroDomain, ForoResponse.class))
+        List<ForoDTO> foroResponse = foros.stream()
+                .map(foroDomain -> modelMapper.map(foroDomain, ForoDTO.class))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(foroResponses);
+        return ResponseEntity.ok(foroResponse);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ForoResponse> actualizarForo(@PathVariable Long id, @RequestBody ForoRequest foroRequest) {
+    public ResponseEntity<ForoDTO> actualizarForo(@PathVariable Long id, @RequestBody ForoRequest foroRequest) {
         ForoDomain foroDomain = modelMapper.map(foroRequest, ForoDomain.class);
-        ForoDomain foroActualizado = foroService.actualizarForo(id, foroDomain);
-        ForoResponse foroResponse = modelMapper.map(foroActualizado, ForoResponse.class);
-        return ResponseEntity.ok(foroResponse);
+        foroService.actualizarForo(id, foroDomain);
+        ForoDTO foroDTO = modelMapper.map(foroDomain, ForoDTO.class);
+        return ResponseEntity.ok(foroDTO);
     }
 
     @DeleteMapping("/{id}")

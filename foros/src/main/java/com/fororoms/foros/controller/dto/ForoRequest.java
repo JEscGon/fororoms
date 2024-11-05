@@ -17,4 +17,6 @@ public class ForoRequest {
     @NotBlank(message = "El autor es obligatorio")
     private String autor;
 
+    ;
+
 }

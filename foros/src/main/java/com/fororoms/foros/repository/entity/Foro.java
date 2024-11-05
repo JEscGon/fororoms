@@ -1,10 +1,7 @@
 package com.fororoms.foros.repository.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,7 +20,10 @@ public class Foro {
 
     private String titulo;
     private String autor;
+
     private LocalDateTime fechaCreacion;
+    private LocalDateTime fechaEdicion;
+
 //    @OneToMany(mappedBy = "foro", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Post> posts;
 

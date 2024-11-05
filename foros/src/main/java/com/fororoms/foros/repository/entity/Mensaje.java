@@ -17,16 +17,18 @@ public class Mensaje {
     private Long id;
 
     private String contenido;
+
+    //TODO : Sacar el autor del token
     private String autor;
 
+    //Fechas
     @Setter(AccessLevel.NONE)
     private LocalDateTime fechaPublicacion;
-
     private LocalDateTime fechaEdicion;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id",nullable = false)
     private Post post;
 
-    private Long usuario_id;
+    //private Long usuario_id;
 }
