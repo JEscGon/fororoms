@@ -3,8 +3,8 @@ package com.fororoms.foros.controller;
 
 import com.fororoms.foros.controller.dto.ForoRequest;
 import com.fororoms.foros.controller.dto.ForoResponse;
-import com.fororoms.foros.service.IForoService;
 import com.fororoms.foros.service.domain.ForoDomain;
+import com.fororoms.foros.service.impl.ForoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class ForoController {
 
     @Autowired
-    private IForoService foroService;
+    private ForoService foroService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -32,7 +32,7 @@ public class ForoController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<ForoResponse> findForo(@PathVariable Long id) {
+    public ResponseEntity<ForoResponse> findForoById(@PathVariable Long id) {
         ForoDomain foroDomain = foroService.obtenerForoPorId(id);
         ForoResponse foroResponse = modelMapper.map(foroDomain, ForoResponse.class);
         return ResponseEntity.ok(foroResponse);
