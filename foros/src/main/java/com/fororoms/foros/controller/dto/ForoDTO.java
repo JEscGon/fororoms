@@ -9,21 +9,12 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ForoResponse {
+public class ForoDTO {
 
     private Long id;
     private String titulo;
     private String autor;
     private LocalDateTime fechaCreacion;
-
-    // Constructor
-    public ForoResponse(Long id, String titulo, String autor) {
-        this.id = id;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.fechaCreacion = LocalDateTime.now();
-    }
-
-
+    private LocalDateTime fechaEdicion;
 
 }

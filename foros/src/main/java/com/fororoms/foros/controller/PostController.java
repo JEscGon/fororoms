@@ -1,71 +1,79 @@
 package com.fororoms.foros.controller;
 
+import com.fororoms.foros.controller.dto.PostDTO;
 import com.fororoms.foros.repository.entity.Post;
-import com.fororoms.foros.service.IPostService;
+import com.fororoms.foros.service.domain.ForoDomain;
+import com.fororoms.foros.service.domain.PostDomain;
+import com.fororoms.foros.service.impl.ForoService;
+import com.fororoms.foros.service.impl.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+//Obj Domain --> Obj DTO
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
 
     @Autowired
-    private IPostService postService;
+    private PostService postService;
+    @Autowired
+    private ForoService foroService;
+    @Autowired
+    private ModelMapper modelMapper;
 
-
-
-    // Crear un nuevo post en un foro
     @PostMapping("/{foroId}")
-    public ResponseEntity<Post> crearPost(@PathVariable Long foroId, @RequestBody Post post) {
-
-    if (foroId == null || foroId <= 0) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    }
-    /*Foro aux = foroService.obtenerForoPorId(foroId);
-    post.setForo(aux);*/
-
-    Post nuevoPost = postService.crearPost(foroId, post);
-    return ResponseEntity.ok(nuevoPost);
-    }
-
-     // Obtener un post por ID
-    @GetMapping("/{postId}")
-    public ResponseEntity<Post> obtenerPostPorId(@PathVariable Long postId) {
-    try {
-            Post post = postService.obtenerPostPorId(postId);
-            return ResponseEntity.ok(post);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    public ResponseEntity<PostDTO> crearPost(@PathVariable Long foroId, @RequestBody PostDTO postDTO) {
+        ForoDomain foro = foroService.obtenerForoPorId(foroId);
+        if(foro == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        PostDomain postDomain = modelMapper.map(postDTO, PostDomain.class);
+        postService.crearPost(foroId,postDomain);
+        PostDTO postResponse = modelMapper.map(postDomain, PostDTO.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(postResponse);
     }
 
-    // Listar todos los posts de un foro
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostDTO> obtenerPostPorId(@PathVariable Long postId) {
+        PostDomain postDomain = postService.obtenerPostPorId(postId);
+        PostDTO postDTO = modelMapper.map(postDomain, PostDTO.class);
+        return ResponseEntity.ok(postDTO);
+    }
+
     @GetMapping("/{foroId}/posts")
-    public ResponseEntity<List<Post>> listarPostsPorForo(@PathVariable Long foroId) {
-        List<Post> posts = postService.listarPostsPorForo(foroId);
-        return ResponseEntity.ok(posts);
+    public ResponseEntity<List<PostDTO>> listarPostsPorForo(@PathVariable Long foroId) {
+        List<PostDomain> posts = postService.listarPostsPorForo(foroId);
+        List<PostDTO> postResponse = posts.stream()
+                .map(postDomain -> modelMapper.map(postDomain, PostDTO.class))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(postResponse);
     }
 
-    // Actualizar un post por ID
     @PutMapping("/{postId}")
-    public ResponseEntity<Post> actualizarPost(@PathVariable Long postId, @RequestBody Post post) {
-        Post postActualizado = postService.actualizarPost(postId, post);
-        return ResponseEntity.ok(postActualizado);
+    public ResponseEntity<PostDTO> actualizarPost(@PathVariable Long postId, @RequestBody Post post) {
+        PostDomain postDomain = modelMapper.map(post, PostDomain.class);
+        postService.actualizarPost(postId, postDomain);
+        PostDTO postDTO = modelMapper.map(postDomain, PostDTO.class);
+        return ResponseEntity.ok(postDTO);
     }
 
-     // Eliminar un post por ID
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> eliminarPost(@PathVariable Long postId) {
         postService.eliminarPost(postId);
         return ResponseEntity.noContent().build();
     }
     @GetMapping("/all")
-    public ResponseEntity<List<Post>> listarPosts(){
-        List<Post> posts = postService.listarPosts();
-        return ResponseEntity.ok(posts);
+    public ResponseEntity<List<PostDTO>> listarPosts(){
+        List<PostDomain> posts = postService.listarPosts();
+        List<PostDTO> postResponse = posts.stream()
+                .map(postDomain -> modelMapper.map(postDomain, PostDTO.class))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(postResponse);
     }
 }

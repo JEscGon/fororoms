@@ -1,4 +1,4 @@
-package com.fororoms.foros.service.domain;
+package com.fororoms.foros.controller.dto;
 
 import com.fororoms.foros.repository.entity.Foro;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDomain {
+public class PostDTO {
 
     private Long id;
     private String contenido;
@@ -20,8 +20,7 @@ public class PostDomain {
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaEdicion;
 
-    private Long foroId;
+    private Foro foro;
 
-    private Long usuarioId;
-
+    private Long usuario_Id;
 }
