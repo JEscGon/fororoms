@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-//TODO : Eliminar interfaces de servicios
 @Service
 public class ForoService {
 

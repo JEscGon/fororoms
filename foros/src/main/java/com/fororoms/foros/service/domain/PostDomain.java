@@ -1,6 +1,7 @@
 package com.fororoms.foros.service.domain;
 
 import com.fororoms.foros.repository.entity.Foro;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,5 +24,4 @@ public class PostDomain {
     private Foro foro;
 
     private Long usuarioId;
-
 }

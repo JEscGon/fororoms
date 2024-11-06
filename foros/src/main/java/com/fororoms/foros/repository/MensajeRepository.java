@@ -9,6 +9,6 @@ import java.util.List;
 public interface MensajeRepository extends JpaRepository<Mensaje, Long> {
 
     List<Mensaje> findByPost(Post post);
-
     void deleteAllByPostId(Long id);
+    List<Mensaje> findAllByPostId(Long postId);
 }

@@ -24,7 +24,7 @@ public class Post {
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaEdicion;
 
-    //TODO : Agregar likes y dislikes a los posts
+    //TODO : Agregar likes y dislikes a los posts o mensajes
 
     @ManyToOne
     @JoinColumn(name = "foro_id", nullable = false)
