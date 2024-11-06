@@ -20,6 +20,6 @@ public class PostDTO {
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaEdicion;
 
-    private Foro foro;
+    private ForoDTO foro;
     private Long usuarioId;
 }

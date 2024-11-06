@@ -21,7 +21,7 @@ public class PostDomain {
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaEdicion;
 
-    private Foro foro;
+    private ForoDomain foro;
 
     private Long usuarioId;
 }

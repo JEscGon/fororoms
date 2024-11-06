@@ -35,9 +35,9 @@ public class MensajeController {
         if(post == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        Post postEntity = modelMapper.map(post, Post.class);
+
         MensajeDomain mensaje = modelMapper.map(mensajeDTO, MensajeDomain.class);
-        mensaje.setPost(postEntity);
+        mensaje.setPost(post);
         mensajeService.save(postId,null, mensaje);
         MensajeDTO mensajeResponse = modelMapper.map(mensaje, MensajeDTO.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(mensajeResponse);

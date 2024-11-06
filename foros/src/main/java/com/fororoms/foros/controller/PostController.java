@@ -33,9 +33,8 @@ public class PostController {
         if(foro == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        Foro foroEntity = modelMapper.map(foro, Foro.class);
         PostDomain postDomain = modelMapper.map(postDTO, PostDomain.class);
-        postDomain.setForo(foroEntity);
+        postDomain.setForo(foro);
         postService.crearPost(foroId,postDomain);
         PostDTO postResponse = modelMapper.map(postDomain, PostDTO.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(postResponse);

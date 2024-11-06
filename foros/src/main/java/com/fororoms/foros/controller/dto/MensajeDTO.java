@@ -20,6 +20,6 @@ public class MensajeDTO {
     private LocalDateTime fechaPublicacion;
     private LocalDateTime fechaEdicion;
 
-    private Post post;
+    private PostDTO post;
     private Long usuarioId;
 }
