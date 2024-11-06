@@ -1,9 +1,7 @@
 package com.fororoms.foros.controller;
 
 import com.fororoms.foros.controller.dto.PostDTO;
-import com.fororoms.foros.repository.PostRepository;
 import com.fororoms.foros.repository.entity.Foro;
-import com.fororoms.foros.repository.entity.Post;
 import com.fororoms.foros.service.domain.ForoDomain;
 import com.fororoms.foros.service.domain.PostDomain;
 import com.fororoms.foros.service.impl.ForoService;
@@ -28,8 +26,6 @@ public class PostController {
     private ForoService foroService;
     @Autowired
     private ModelMapper modelMapper;
-    @Autowired
-    private PostRepository postRepository;
 
     @PostMapping("/new/{foroId}")
     public ResponseEntity<PostDTO> crearPost(@PathVariable Long foroId, @RequestBody PostDTO postDTO) {
@@ -62,12 +58,12 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    public ResponseEntity<PostDTO> actualizarPost(@PathVariable Long postId, @RequestBody Post post) {
-        PostDomain postDomain = modelMapper.map(post, PostDomain.class);
-        postDomain.setForo(postRepository.findById(postId).get().getForo());
+    public ResponseEntity<PostDTO> actualizarPost(@PathVariable Long postId, @RequestBody PostDTO postDTO) {
+        PostDomain postDomain = modelMapper.map(postDTO, PostDomain.class);
+        postDomain.setForo(postService.obtenerPostPorId(postId).getForo());
         postService.actualizarPost(postId, postDomain);
-        PostDTO postDTO = modelMapper.map(postDomain, PostDTO.class);
-        return ResponseEntity.ok(postDTO);
+        PostDTO response = modelMapper.map(postDomain, PostDTO.class);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{postId}")

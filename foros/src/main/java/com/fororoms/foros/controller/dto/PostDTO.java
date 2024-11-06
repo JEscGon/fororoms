@@ -22,5 +22,4 @@ public class PostDTO {
 
     private Foro foro;
     private Long usuarioId;
-
 }

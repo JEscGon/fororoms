@@ -1,4 +1,4 @@
-package com.fororoms.foros.service.domain;
+package com.fororoms.foros.controller.dto;
 
 import com.fororoms.foros.repository.entity.Post;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MensajeDomain {
+public class MensajeDTO {
 
     private Long id;
     private String contenido;
@@ -20,7 +20,6 @@ public class MensajeDomain {
     private LocalDateTime fechaPublicacion;
     private LocalDateTime fechaEdicion;
 
-    //TODO : ver como sacar solo el id de post.
     private Post post;
     private Long usuarioId;
 }
