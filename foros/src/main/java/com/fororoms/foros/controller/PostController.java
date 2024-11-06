@@ -1,6 +1,8 @@
 package com.fororoms.foros.controller;
 
 import com.fororoms.foros.controller.dto.PostDTO;
+import com.fororoms.foros.repository.PostRepository;
+import com.fororoms.foros.repository.entity.Foro;
 import com.fororoms.foros.repository.entity.Post;
 import com.fororoms.foros.service.domain.ForoDomain;
 import com.fororoms.foros.service.domain.PostDomain;
@@ -26,14 +28,18 @@ public class PostController {
     private ForoService foroService;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private PostRepository postRepository;
 
-    @PostMapping("/{foroId}")
+    @PostMapping("/new/{foroId}")
     public ResponseEntity<PostDTO> crearPost(@PathVariable Long foroId, @RequestBody PostDTO postDTO) {
         ForoDomain foro = foroService.obtenerForoPorId(foroId);
         if(foro == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        Foro foroEntity = modelMapper.map(foro, Foro.class);
         PostDomain postDomain = modelMapper.map(postDTO, PostDomain.class);
+        postDomain.setForo(foroEntity);
         postService.crearPost(foroId,postDomain);
         PostDTO postResponse = modelMapper.map(postDomain, PostDTO.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(postResponse);
@@ -46,7 +52,7 @@ public class PostController {
         return ResponseEntity.ok(postDTO);
     }
 
-    @GetMapping("/{foroId}/posts")
+    @GetMapping("/{foroId}/all")
     public ResponseEntity<List<PostDTO>> listarPostsPorForo(@PathVariable Long foroId) {
         List<PostDomain> posts = postService.listarPostsPorForo(foroId);
         List<PostDTO> postResponse = posts.stream()
@@ -58,6 +64,7 @@ public class PostController {
     @PutMapping("/{postId}")
     public ResponseEntity<PostDTO> actualizarPost(@PathVariable Long postId, @RequestBody Post post) {
         PostDomain postDomain = modelMapper.map(post, PostDomain.class);
+        postDomain.setForo(postRepository.findById(postId).get().getForo());
         postService.actualizarPost(postId, postDomain);
         PostDTO postDTO = modelMapper.map(postDomain, PostDTO.class);
         return ResponseEntity.ok(postDTO);

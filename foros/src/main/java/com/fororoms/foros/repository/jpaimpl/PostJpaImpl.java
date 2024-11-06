@@ -28,8 +28,10 @@ public class PostJpaImpl implements IPost {
             Optional<Post> postEntity = postRepository.findById(postId);
             if(postEntity.isPresent()) {
                 post = postEntity.get();
+                LocalDateTime aux = post.getFechaCreacion();
                 modelMapper.map(postDomain, post);
                 post.setFechaEdicion(LocalDateTime.now());
+                post.setFechaCreacion(aux);
                 post.setId(postId);
             }else{
                 throw new RuntimeException("Post no encontrado");

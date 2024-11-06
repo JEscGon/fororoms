@@ -21,6 +21,6 @@ public class PostDTO {
     private LocalDateTime fechaEdicion;
 
     private Foro foro;
+    private Long usuarioId;
 
-    private Long usuario_Id;
 }

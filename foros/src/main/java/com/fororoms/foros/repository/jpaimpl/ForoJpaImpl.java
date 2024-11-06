@@ -41,8 +41,10 @@ public class ForoJpaImpl implements IForo {
             Optional<Foro> foroEntity = foroRepository.findById(id);
             if (foroEntity.isPresent()) {
                 foro = foroEntity.get();
+                LocalDateTime aux = foro.getFechaCreacion();
                 modelMapper.map(foroDomain, foro);
                 foro.setFechaEdicion(LocalDateTime.now());
+                foro.setFechaCreacion(aux);
                 foro.setId(id);
             } else {
                 throw new RuntimeException("Foro no encontrado");

@@ -19,18 +19,25 @@ public class PostService {
     @Autowired
     private IForo foroRepository;
 
+    //TODO: ARREGLAR
     public void crearPost(Long foroId, PostDomain post) {
-        ForoDomain foro = foroRepository.findForoById(foroId);
+            postRepository.save(foroId,null, post);
     }
+
     public PostDomain obtenerPostPorId(Long id) {
         return postRepository.obtenerPostPorId(id);
     }
+
+    //TODO: ARREGLAR
     public List<PostDomain> listarPostsPorForo(Long foroId) {
         return postRepository.listarPostsPorForo(foroId);
     }
+
+    //TODO: ARREGLAR
     public void actualizarPost(Long id, PostDomain postAct) {
-        postRepository.save(null,id ,postAct );
+        postRepository.save(null,id ,postAct);
     }
+
     @Transactional
     public void eliminarPost(Long id) {
     // Primero, elimina los mensajes relacionados
