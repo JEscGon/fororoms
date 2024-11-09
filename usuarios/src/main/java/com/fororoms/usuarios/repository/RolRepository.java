@@ -1,6 +1,6 @@
 package com.fororoms.usuarios.repository;
 
-import com.fororoms.usuarios.entity.Rol;
+import com.fororoms.usuarios.repository.entity.Rol;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

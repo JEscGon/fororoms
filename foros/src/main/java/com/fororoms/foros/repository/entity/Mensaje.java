@@ -2,7 +2,6 @@ package com.fororoms.foros.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Getter

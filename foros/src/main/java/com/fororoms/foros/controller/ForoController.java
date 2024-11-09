@@ -4,7 +4,7 @@ package com.fororoms.foros.controller;
 import com.fororoms.foros.controller.dto.ForoRequest;
 import com.fororoms.foros.controller.dto.ForoDTO;
 import com.fororoms.foros.service.domain.ForoDomain;
-import com.fororoms.foros.service.impl.ForoService;
+import com.fororoms.foros.service.ForoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

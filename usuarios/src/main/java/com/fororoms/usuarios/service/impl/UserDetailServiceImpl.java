@@ -4,8 +4,8 @@ package com.fororoms.usuarios.service.impl;
 import com.fororoms.usuarios.controller.dto.AuthCreateUserRequest;
 import com.fororoms.usuarios.controller.dto.AuthLoginRequest;
 import com.fororoms.usuarios.controller.dto.AuthResponse;
-import com.fororoms.usuarios.entity.Rol;
-import com.fororoms.usuarios.entity.Usuario;
+import com.fororoms.usuarios.repository.entity.Rol;
+import com.fororoms.usuarios.repository.entity.Usuario;
 import com.fororoms.usuarios.repository.RolRepository;
 import com.fororoms.usuarios.repository.UsuarioRepository;
 
@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
+
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -39,8 +40,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private RolRepository roleRepository;
     @Autowired
     private JwtUtils jwtUtils;
-
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -66,7 +65,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 userEntity.getAccountNoLocked(),
                 authorityList);
     }
-
     public AuthResponse loginUser(AuthLoginRequest authLoginRequest) {
 
         String username = authLoginRequest.username();
@@ -81,7 +79,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
 
     }
-
     private Authentication authenticate(String username, String password) {
 
         UserDetails userDetails = this.loadUserByUsername(username);
@@ -96,7 +93,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
     }
-
     public AuthResponse createUser(AuthCreateUserRequest authCreateUserRequest) throws IllegalAccessException {
 
         String username = authCreateUserRequest.username();

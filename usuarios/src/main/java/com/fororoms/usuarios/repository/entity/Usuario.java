@@ -1,6 +1,5 @@
-package com.fororoms.usuarios.entity;
+package com.fororoms.usuarios.repository.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 

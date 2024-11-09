@@ -2,10 +2,8 @@ package com.fororoms.foros.controller;
 
 import com.fororoms.foros.controller.dto.MensajeDTO;
 import com.fororoms.foros.repository.entity.Mensaje;
-import com.fororoms.foros.repository.entity.Post;
 import com.fororoms.foros.repository.interfaces.IMensaje;
 import com.fororoms.foros.repository.interfaces.IPost;
-import com.fororoms.foros.service.IMensajeService;
 import com.fororoms.foros.service.domain.MensajeDomain;
 import com.fororoms.foros.service.domain.PostDomain;
 import org.modelmapper.ModelMapper;

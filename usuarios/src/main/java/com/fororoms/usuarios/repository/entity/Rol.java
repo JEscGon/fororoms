@@ -1,4 +1,4 @@
-package com.fororoms.usuarios.entity;
+package com.fororoms.usuarios.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
