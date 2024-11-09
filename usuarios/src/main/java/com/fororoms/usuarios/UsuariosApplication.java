@@ -1,8 +1,8 @@
 package com.fororoms.usuarios;
 
-import com.fororoms.usuarios.entity.*;
 import com.fororoms.usuarios.repository.UserDetailsRepository;
 import com.fororoms.usuarios.repository.UsuarioRepository;
+import com.fororoms.usuarios.repository.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -37,9 +37,6 @@ public class UsuariosApplication {
 			Permission deletePermission = Permission.builder()
 					.name("DELETE")
 					.build();
-			Permission refactorPermission = Permission.builder()
-					.name("REFACTOR")
-					.build();
 
 			// Crea roles */
 			Rol adminRole = Rol.builder()
@@ -57,10 +54,6 @@ public class UsuariosApplication {
 					.permissionList(Set.of(readPermission))
 					.build();
 
-			Rol developerRole = Rol.builder()
-					.roleEnum(RolEnum.DEVELOPER)
-					.permissionList(Set.of(createPermission, readPermission, updatePermission, deletePermission, refactorPermission))
-					.build();
 
 			// Crea USERS */
 			Usuario user = Usuario.builder()
@@ -93,27 +86,7 @@ public class UsuariosApplication {
 					.role(Set.of(invitedRole))
 					.build();
 
-			Usuario developer = Usuario.builder()
-					.username("developer")
-					.password(passwordEncoder.encode("developer"))
-					.isEnabled(true)
-					.accountNoExpired(true)
-					.accountNoLocked(true)
-					.credentialsNoExpired(true)
-					.role(Set.of(developerRole))
-					.build();
-
-			Usuario userAll = Usuario.builder()
-					.username("userAll")
-					.password(passwordEncoder.encode("userAll"))
-					.isEnabled(true)
-					.accountNoExpired(true)
-					.accountNoLocked(true)
-					.credentialsNoExpired(true)
-					.role(Set.of(userRole, adminRole, invitedRole, developerRole))
-					.build();
-
-			userRepository.saveAll(List.of(user, admin, invited, developer, userAll));
+			userRepository.saveAll(List.of(user, admin, invited));
 
 		        // Crea UserDetails
         UserDetails userDetails1 = UserDetails.builder()
@@ -148,19 +121,14 @@ public class UsuariosApplication {
 
         userDetailsRepository.saveAll(List.of(userDetails1, userDetails2));
 
-
 		//ver contraseña encriptada
 		System.out.println("");
-		System.out.println("USER DEFAULTS");
+		System.out.println("USER DEFAULTS for PRODUCTION");
 		System.out.println("----------------------------------------------------------------------------------------------------");
         System.out.println("Username : admin " + " Password : " + new BCryptPasswordEncoder().encode("admin"));
 		System.out.println("Username : user " + " Password : " + new BCryptPasswordEncoder().encode("user"));
 		System.out.println("Username : invited " + " Password : " + new BCryptPasswordEncoder().encode("invited"));
-		System.out.println("Username : developer " + " Password : " + new BCryptPasswordEncoder().encode("developer"));
-		System.out.println("Username : userAll " + " Password : " + new BCryptPasswordEncoder().encode("userAll"));
 		System.out.println("----------------------------------------------------------------------------------------------------");
-
-
 		};
 	}
 }

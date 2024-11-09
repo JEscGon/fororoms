@@ -1,6 +1,6 @@
 package com.fororoms.usuarios.controller;
 
-import com.fororoms.usuarios.entity.Usuario;
+import com.fororoms.usuarios.repository.entity.Usuario;
 import com.fororoms.usuarios.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,4 +27,5 @@ public class UsuarioController {
         Optional<Usuario> usuario = usuarioService.obtenerUsuarioPorNombre(username);
         return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
 }

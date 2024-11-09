@@ -1,6 +1,6 @@
 package com.fororoms.usuarios.service;
 
-import com.fororoms.usuarios.entity.Usuario;
+import com.fororoms.usuarios.repository.entity.Usuario;
 
 import java.util.List;
 import java.util.Optional;

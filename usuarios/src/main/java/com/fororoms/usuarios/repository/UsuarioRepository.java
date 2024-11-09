@@ -1,6 +1,6 @@
 package com.fororoms.usuarios.repository;
 
-import com.fororoms.usuarios.entity.Usuario;
+import com.fororoms.usuarios.repository.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

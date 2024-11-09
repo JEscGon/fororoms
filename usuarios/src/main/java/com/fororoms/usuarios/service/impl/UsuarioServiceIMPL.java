@@ -1,6 +1,6 @@
 package com.fororoms.usuarios.service.impl;
 
-import com.fororoms.usuarios.entity.Usuario;
+import com.fororoms.usuarios.repository.entity.Usuario;
 import com.fororoms.usuarios.repository.UsuarioRepository;
 import com.fororoms.usuarios.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;

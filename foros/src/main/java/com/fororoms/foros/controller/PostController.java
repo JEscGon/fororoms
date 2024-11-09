@@ -1,11 +1,10 @@
 package com.fororoms.foros.controller;
 
 import com.fororoms.foros.controller.dto.PostDTO;
-import com.fororoms.foros.repository.entity.Foro;
 import com.fororoms.foros.service.domain.ForoDomain;
 import com.fororoms.foros.service.domain.PostDomain;
-import com.fororoms.foros.service.impl.ForoService;
-import com.fororoms.foros.service.impl.PostService;
+import com.fororoms.foros.service.ForoService;
+import com.fororoms.foros.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

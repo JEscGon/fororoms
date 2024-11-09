@@ -1,4 +1,4 @@
-package com.fororoms.foros.service.impl;
+package com.fororoms.foros.service;
 
 import com.fororoms.foros.repository.interfaces.IMensaje;
 import com.fororoms.foros.service.domain.MensajeDomain;

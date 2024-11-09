@@ -6,6 +6,32 @@ spring:
     name: gateway
   config: #Configuracion del servidor de configuracion
     import: optional:configserver:http://localhost:8888
+  cloud: #Configuracion de Gateway RUTAS
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: foros
+        uri: http://localhost:8001
+        predicates:
+          - Path=/api/foros/**
+      - id: mensajes
+        uri: http://localhost:8001
+        predicates:
+          - Path=/api/mensajes/**
+      - id: posts
+        uri: http://localhost:8001
+        predicates:
+          - Path=/api/posts/**
+      - id: usuarios
+        uri: http://localhost:8002
+        predicates:
+          - Path=/api/usuarios/**
+      - id: auth
+        uri: http://localhost:8002
+        predicates:
+          - Path=/auth/**
 
 eureka: #Cliente Eureka configuracion
   instance:
