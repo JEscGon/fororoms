@@ -4,7 +4,7 @@ package com.fororoms.usuarios.controller;
 import com.fororoms.usuarios.controller.dto.AuthCreateUserRequest;
 import com.fororoms.usuarios.controller.dto.AuthLoginRequest;
 import com.fororoms.usuarios.controller.dto.AuthResponse;
-import com.fororoms.usuarios.service.impl.UserDetailServiceImpl;
+import com.fororoms.usuarios.service.UserDetailServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
