@@ -17,5 +17,5 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 logging:
   level:
- #TODO:   com.netflix.eureka: OFF
- #TODO:   com.netflix.discovery: OFF
+    com.netflix.eureka: OFF
+    com.netflix.discovery: OFF
