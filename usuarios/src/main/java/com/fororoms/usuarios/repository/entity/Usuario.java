@@ -1,5 +1,6 @@
 package com.fororoms.usuarios.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,15 +42,17 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Rol> role = new HashSet<>();
 
-    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_details_id", referencedColumnName = "id")
+    @JsonManagedReference
     private UserDetails userDetails;
 
+
+
     // -- >> FECHAS
-    @Setter(AccessLevel.NONE)
+    //@Setter(AccessLevel.NONE)
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
-
     @Column(name = "fecha_edicion")
     private LocalDateTime fechaEdicion;
-
 }

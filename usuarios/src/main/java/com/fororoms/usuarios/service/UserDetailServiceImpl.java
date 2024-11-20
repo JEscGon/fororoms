@@ -1,4 +1,4 @@
-package com.fororoms.usuarios.service.impl;
+package com.fororoms.usuarios.service;
 
 
 import com.fororoms.usuarios.controller.dto.AuthCreateUserRequest;
@@ -80,19 +80,16 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     }
     private Authentication authenticate(String username, String password) {
-
         UserDetails userDetails = this.loadUserByUsername(username);
-
         if (userDetails == null) {
             throw new BadCredentialsException("Usuario o contraseña incorrecta");
         }
         if(!passwordEncoder.matches(password, userDetails.getPassword())){
             throw new BadCredentialsException("Contraseña incorrecta");
         }
-
         return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
-
     }
+
     public AuthResponse createUser(AuthCreateUserRequest authCreateUserRequest) throws IllegalAccessException {
 
         String username = authCreateUserRequest.username();
@@ -132,7 +129,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
         AuthResponse authResponse = new AuthResponse(userCreated.getUsername(), "User created", accessToken, true);
 
         return authResponse;
-
     }
 
 }

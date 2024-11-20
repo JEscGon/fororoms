@@ -1,5 +1,6 @@
 package com.fororoms.usuarios.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -49,8 +50,8 @@ public class UserDetails {
     @Column(name = "iban", nullable = false, unique = true)
     private String iban;
 
-    @OneToOne
-    @JoinColumn(name = "userDetails", referencedColumnName = "id")
-    private Usuario userEntity;
+    @OneToOne(mappedBy = "userDetails")
+    @JsonBackReference
+    private Usuario usuario;
 
 }
