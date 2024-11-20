@@ -1,12 +1,10 @@
 package com.fororoms.foros.service;
 
-
 import com.fororoms.foros.repository.interfaces.IForo;
 import com.fororoms.foros.service.domain.ForoDomain;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

@@ -9,4 +9,5 @@ public interface IForo {
     void deleteForoById(Long id);
     ForoDomain save(Long id ,ForoDomain foroDomain);
     List<ForoDomain> findAllForos();
+
 }

@@ -62,5 +62,4 @@ public class ForoController {
         return ResponseEntity.ok(null);
     }
 
-
 }
