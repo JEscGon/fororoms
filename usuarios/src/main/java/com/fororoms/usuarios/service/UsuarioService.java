@@ -1,8 +1,7 @@
 package com.fororoms.usuarios.service;
 
 import com.fororoms.usuarios.repository.interfaces.IUsuario;
-import com.fororoms.usuarios.service.domain.UserDetailsDomain;
-import com.fororoms.usuarios.service.domain.UsuarioDomain;
+import com.fororoms.usuarios.service.domain.UserDomain;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,25 +19,20 @@ public class UsuarioService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public void crearUsuario(UsuarioDomain usuarioDomain, UserDetailsDomain userDetailsDomain) {
-        usuarioRepository.save(null, null,userDetailsDomain );
-    }
-    public Optional<UsuarioDomain> obtenerUsuarioPorNombre(String username) {
-        return Optional.ofNullable(usuarioRepository.findUsuarioByUsername(username));
+    public Optional<UserDomain> obtenerUsuarioByUsername(String username) {
+        return Optional.ofNullable(usuarioRepository.findUserByUsername(username));
     }
     public void eliminarUsuario(Long id) {
-        usuarioRepository.deleteUsuarioById(id);
+        usuarioRepository.deleteUserById(id);
     }
-    public void actualizarUsuario(Long id, UsuarioDomain usuarioDomain, UserDetailsDomain userDetailsDomain) {
-        usuarioRepository.save(id ,usuarioDomain, userDetailsDomain);
+    public void actualizarUsuario(Long id, UserDomain usuarioDomain) {
+        usuarioRepository.save(id ,usuarioDomain);
     }
-    public List<UsuarioDomain> obtenerUsuarios() {
-        return usuarioRepository.findAllUsuarios();
+    public List<UserDomain> findAllUsuarios() {
+        return usuarioRepository.findAllUsers();
     }
-    public Optional<UsuarioDomain> obtenerUsuarioPorId(Long id) {
-        return Optional.ofNullable(usuarioRepository.findUsuarioById(id));
+    public Optional<UserDomain> obtenerUsuarioPorId(Long id) {
+        return Optional.ofNullable(usuarioRepository.findUserById(id));
     }
-
-
 
 }

@@ -2,12 +2,9 @@ package com.fororoms.usuarios.repository.jpaimpl;
 
 import com.fororoms.usuarios.repository.UserDetailsRepository;
 import com.fororoms.usuarios.repository.UsuarioRepository;
-import com.fororoms.usuarios.repository.entity.Rol;
-import com.fororoms.usuarios.repository.entity.UserDetails;
-import com.fororoms.usuarios.repository.entity.Usuario;
+import com.fororoms.usuarios.repository.entity.User;
 import com.fororoms.usuarios.repository.interfaces.IUsuario;
-import com.fororoms.usuarios.service.domain.UserDetailsDomain;
-import com.fororoms.usuarios.service.domain.UsuarioDomain;
+import com.fororoms.usuarios.service.domain.UserDomain;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 //· Obj dom --> obj entity
@@ -32,63 +28,51 @@ public class UsuarioJpaIMPL implements IUsuario {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public void deleteUsuarioById(Long id) {
+    public void deleteUserById(Long id) {
         usuarioRepository.deleteById(id);
     }
     @Override
-    public void save(@PathVariable Long id, UsuarioDomain usuarioDomain, UserDetailsDomain userDetailsDomain) {
-        Usuario usuario;
-        if(id != null) {
-            Optional<Usuario> usuarioEntity = usuarioRepository.findById(id);
-            if(usuarioEntity.isPresent()) {
-                usuario = usuarioEntity.get();
-                LocalDateTime aux = usuario.getFechaCreacion();
-                usuario.setUsername(usuarioDomain.getUsername());
-                usuario.setPassword(passwordEncoder.encode(usuarioDomain.getPassword()));
-                usuario.setId(id);
-                usuario.setRole(usuarioDomain.getRole().stream()
-                    .map(roleDomain -> modelMapper.map(roleDomain, Rol.class))
-                    .collect(Collectors.toSet()));
-                usuario.setFechaEdicion(LocalDateTime.now());
-                usuario.setFechaCreacion(aux);
-                if(userDetailsDomain != null) {
-                    UserDetails userDetails = modelMapper.map(userDetailsDomain, UserDetails.class);
-                    userDetailsRepository.save(userDetails);
-                    usuario.setUserDetails(userDetails);
-                }
-            } else {
-                throw new RuntimeException("Usuario no encontrado");
-            }
-        }else{
-            usuario = modelMapper.map(usuarioDomain, Usuario.class);
-            usuario.setFechaCreacion(LocalDateTime.now());
-            usuario.setUserDetails(modelMapper.map(userDetailsDomain, UserDetails.class));
+    public void save(@PathVariable Long id, UserDomain usuarioDomain) {
+        if(id!=null){
+            User usuarioEntity = usuarioRepository.findById(id).orElseThrow(
+                    () -> new RuntimeException("Usuario no encontrado"));
+            usuarioEntity.setUsername(usuarioDomain.getUsername());
+            usuarioEntity.setPassword(passwordEncoder.encode(usuarioDomain.getPassword()));
+            usuarioEntity.setDni(usuarioDomain.getDni());
+            usuarioEntity.setNombre(usuarioDomain.getNombre());
+            usuarioEntity.setApellidos(usuarioDomain.getApellidos());
+            usuarioEntity.setFechaNacimiento(usuarioDomain.getFechaNacimiento());
+            usuarioEntity.setEmail(usuarioDomain.getEmail());
+            usuarioEntity.setTelefono(usuarioDomain.getTelefono());
+            usuarioEntity.setDireccion(usuarioDomain.getDireccion());
+            usuarioEntity.setPais(usuarioDomain.getPais());
+            usuarioEntity.setCodigoPostal(usuarioDomain.getCodigoPostal());
+            usuarioEntity.setCiudad(usuarioDomain.getCiudad());
+            usuarioEntity.setIban(usuarioDomain.getIban());
+            usuarioEntity.setFechaCreacion(usuarioDomain.getFechaCreacion());
+            usuarioEntity.setFechaEdicion(LocalDateTime.now());
+
+            usuarioRepository.save(usuarioEntity);
         }
-       if (userDetailsDomain != null) {
-            UserDetails userDetails = modelMapper.map(userDetailsDomain, UserDetails.class);
-            userDetailsRepository.save(userDetails);
-            usuario.setUserDetails(userDetails);
-       }
-        usuarioRepository.save(usuario);
     }
     @Override
-    public UsuarioDomain findUsuarioById(Long id) {
-        Usuario usuarioEntity = usuarioRepository.findById(id).orElseThrow(
+    public UserDomain findUserById(Long id) {
+        User usuarioEntity = usuarioRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Usuario no encontrado"));
-        return modelMapper.map(usuarioEntity, UsuarioDomain.class);
+        return modelMapper.map(usuarioEntity, UserDomain.class);
     }
     @Override
-    public List<UsuarioDomain> findAllUsuarios() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
+    public List<UserDomain> findAllUsers() {
+        List<User> usuarios = usuarioRepository.findAll();
         return usuarios.stream()
-                .map(usuario -> modelMapper.map(usuario, UsuarioDomain.class))
+                .map(usuario -> modelMapper.map(usuario, UserDomain.class))
                 .collect(Collectors.toList());
     }
     @Override
-    public UsuarioDomain findUsuarioByUsername(String username) {
-        Usuario usuarioEntity = usuarioRepository.findByUsername(username).orElseThrow(
+    public UserDomain findUserByUsername(String username) {
+        User usuarioEntity = usuarioRepository.findByUsername(username).orElseThrow(
                 () -> new RuntimeException("Usuario no encontrado"));
-        return modelMapper.map(usuarioEntity, UsuarioDomain.class);
+        return modelMapper.map(usuarioEntity, UserDomain.class);
     }
 
 }

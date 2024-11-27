@@ -1,10 +1,8 @@
 package com.fororoms.usuarios.controller;
 
-import com.fororoms.usuarios.controller.dto.UsuarioDTO;
-import com.fororoms.usuarios.controller.dto.UsuarioDetailsDTO;
+import com.fororoms.usuarios.controller.dto.UserDTO;
 import com.fororoms.usuarios.service.UsuarioService;
-import com.fororoms.usuarios.service.domain.UserDetailsDomain;
-import com.fororoms.usuarios.service.domain.UsuarioDomain;
+import com.fororoms.usuarios.service.domain.UserDomain;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,50 +22,44 @@ public class UsuarioController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping("/find/{username}")
-    public ResponseEntity<UsuarioDTO> obtenerUsuarioPorNombre(@PathVariable String username) {
-        Optional<UsuarioDomain> usuario = usuarioService.obtenerUsuarioPorNombre(username);
-        if(usuario.isPresent()){
-            UsuarioDTO usuarioDTO = modelMapper.map(usuario, UsuarioDTO.class);
-            return ResponseEntity.ok(usuarioDTO);
-        }
-        return ResponseEntity.notFound().build();
-    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarUsuarioPorId(@PathVariable Long id) {
+    public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
         usuarioService.eliminarUsuario(id);
         return ResponseEntity.notFound().build();
     }
-    @GetMapping("/findAll")
-    public ResponseEntity <List<UsuarioDTO>> obtenerUsuarios() {
-        return ResponseEntity.ok(usuarioService.obtenerUsuarios().stream()
-                .map(usuario -> modelMapper.map(usuario, UsuarioDTO.class))
-                .collect(Collectors.toList())
-        );
-    }
-//TODO: revisar como se hace el mapeo de UserDetails y xke no guarda la informacion.
-    @GetMapping("/findAll/details")
-    public ResponseEntity <List<UsuarioDetailsDTO>> obtenerUsuariosDetails() {
-        return ResponseEntity.ok(usuarioService.obtenerDetallesUsuarios().stream()
-                .map(usuario -> modelMapper.map(usuario, UsuarioDetailsDTO.class))
-                .collect(Collectors.toList())
-        );
-    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> actualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDetailsDTO usuarioDetailsDTO) {
-        UserDetailsDomain userDetailsDomain = modelMapper.map(usuarioDetailsDTO, UserDetailsDomain.class);
-        UsuarioDomain usuarioDomain = usuarioService.obtenerUsuarioPorId(id).get();
-        usuarioService.actualizarUsuario(id, usuarioDomain, userDetailsDomain);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> actualizarUsuario(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        UserDomain userDomain = modelMapper.map(userDTO, UserDomain.class);
+        usuarioService.actualizarUsuario(id, userDomain);
+        return ResponseEntity.ok("Usuario actualizado correctamente");
     }
 
-    @PostMapping("/new")
-    public ResponseEntity<Void> crearUsuario(@RequestBody UsuarioDTO usuarioDTO,UsuarioDetailsDTO usuarioDetailsDTO) {
-        UsuarioDomain usuarioDomain = modelMapper.map(usuarioDTO, UsuarioDomain.class);
-        UserDetailsDomain userDetailsDomain = modelMapper.map(usuarioDetailsDTO, UserDetailsDomain.class);
-        usuarioService.crearUsuario(usuarioDomain, userDetailsDomain);
-        return ResponseEntity.ok().build();
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> obtenerTodosLosUsuarios() {
+        List<UserDomain> userDomains = usuarioService.findAllUsuarios();
+        List<UserDTO> userDTOS = userDomains.stream()
+                .map(userDomain -> modelMapper.map(userDomain, UserDTO.class))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(userDTOS);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> obtenerUsuarioPorId(@PathVariable Long id) {
+        Optional<UserDomain> userDomain = usuarioService.obtenerUsuarioPorId(id);
+        return userDomain.map(userDomain1 -> ResponseEntity.ok(modelMapper.map(userDomain1, UserDTO.class)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/find/{username}")
+    public ResponseEntity<UserDTO> obtenerUsuarioPorUsername(@PathVariable String username) {
+        Optional<UserDomain> userDomain = usuarioService.obtenerUsuarioByUsername(username);
+        return userDomain.map(userDomain1 -> ResponseEntity.ok(modelMapper.map(userDomain1, UserDTO.class)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
 
 
 }

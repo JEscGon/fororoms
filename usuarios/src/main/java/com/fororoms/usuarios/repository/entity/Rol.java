@@ -1,5 +1,6 @@
 package com.fororoms.usuarios.repository.entity;
 
+import com.fororoms.usuarios.service.domain.RolEnum;
 import jakarta.persistence.*;
 import lombok.*;
 

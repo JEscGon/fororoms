@@ -1,8 +1,11 @@
 package com.fororoms.usuarios;
 
+import com.fororoms.usuarios.repository.PermissionRepository;
+import com.fororoms.usuarios.repository.RolRepository;
 import com.fororoms.usuarios.repository.UserDetailsRepository;
 import com.fororoms.usuarios.repository.UsuarioRepository;
 import com.fororoms.usuarios.repository.entity.*;
+import com.fororoms.usuarios.service.domain.RolEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,14 +22,15 @@ import java.util.Set;
 @SpringBootApplication(scanBasePackages = "com.fororoms.usuarios")
 public class UsuariosApplication {
 	public static void main(String[] args) {SpringApplication.run(UsuariosApplication.class, args);}
-//
+
+////SOLO SE INICIA UNA VEZ PARA CREAR LOS ROLES Y PERMISOS
 //	@Autowired
 //	PasswordEncoder passwordEncoder;
 //
 //	@Bean
-//	CommandLineRunner init(UsuarioRepository userRepository, UserDetailsRepository userDetailsRepository) {
+//	CommandLineRunner init(RolRepository repository, PermissionRepository permissionRepository) {
 //		return args -> {
-//			// Crea permisos */
+//// Crea permisos */
 //			Permission createPermission = Permission.builder()
 //					.name("CREATE")
 //					.build();
@@ -39,98 +43,24 @@ public class UsuariosApplication {
 //			Permission deletePermission = Permission.builder()
 //					.name("DELETE")
 //					.build();
+//			permissionRepository.saveAll(List.of(createPermission, readPermission, updatePermission, deletePermission));
 //
-//			// Crea roles */
+//// Crea roles */
 //			Rol adminRole = Rol.builder()
-//					.roleEnum(RolEnum.ADMIN)
-//					.permissionList(Set.of(createPermission, readPermission, updatePermission, deletePermission))
+//					.roleEnum(RolEnum.ROLE_ADMIN)
 //					.build();
 //
 //			Rol userRole = Rol.builder()
-//					.roleEnum(RolEnum.USER)
-//					.permissionList(Set.of(createPermission, readPermission))
+//					.roleEnum(RolEnum.ROLE_USER)
 //					.build();
 //
 //			Rol invitedRole = Rol.builder()
-//					.roleEnum(RolEnum.INVITED)
-//					.permissionList(Set.of(readPermission))
+//					.roleEnum(RolEnum.ROLE_INVITED)
 //					.build();
 //
-//
-//			// Crea USERS */
-//			Usuario user = Usuario.builder()
-//					.username("user")
-//					.password(passwordEncoder.encode("user"))
-//					.isEnabled(true)
-//					.accountNoExpired(true)
-//					.accountNoLocked(true)
-//					.credentialsNoExpired(true)
-//					.role(Set.of(userRole))
-//					.build();
-//
-//			Usuario admin = Usuario.builder()
-//					.username("admin")
-//					.password(passwordEncoder.encode("admin"))
-//					.isEnabled(true)
-//					.accountNoExpired(true)
-//					.accountNoLocked(true)
-//					.credentialsNoExpired(true)
-//					.role(Set.of(adminRole))
-//					.build();
-//
-//			Usuario invited = Usuario.builder()
-//					.username("invited")
-//					.password(passwordEncoder.encode("invited"))
-//					.isEnabled(true)
-//					.accountNoExpired(true)
-//					.accountNoLocked(true)
-//					.credentialsNoExpired(true)
-//					.role(Set.of(invitedRole))
-//					.build();
-//
-//			userRepository.saveAll(List.of(user, admin, invited));
-//
-//		// Crea UserDetails
-//        UserDetails userDetails1 = UserDetails.builder()
-//            .nombre("John")
-//            .apellidos("Doe")
-//            .email("john.doe@example.com")
-//            .fechaNacimiento("1990-01-01")
-//            .dni("12345678A")
-//            .telefono("123456789")
-//            .direccion("123 Main St")
-//            .pais("USA")
-//            .codigoPostal("12345")
-//            .ciudad("New York")
-//            .iban("US12345678901234567890")
-//            .userEntity(user)
-//            .build();
-//
-//        UserDetails userDetails2 = UserDetails.builder()
-//            .nombre("Jane")
-//            .apellidos("Doe")
-//            .email("jane.doe@example.com")
-//            .fechaNacimiento("1992-02-02")
-//            .dni("87654321B")
-//            .telefono("987654321")
-//            .direccion("456 Elm St")
-//            .pais("USA")
-//            .codigoPostal("54321")
-//            .ciudad("Los Angeles")
-//            .iban("US09876543210987654321")
-//            .userEntity(admin)
-//            .build();
-//
-//        userDetailsRepository.saveAll(List.of(userDetails1, userDetails2));
-//
-//		//ver contraseña encriptada
-//		System.out.println("");
-//		System.out.println("USER DEFAULTS for PRODUCTION");
-//		System.out.println("----------------------------------------------------------------------------------------------------");
-//        System.out.println("Username : admin " + " Password : " + new BCryptPasswordEncoder().encode("admin"));
-//		System.out.println("Username : user " + " Password : " + new BCryptPasswordEncoder().encode("user"));
-//		System.out.println("Username : invited " + " Password : " + new BCryptPasswordEncoder().encode("invited"));
-//		System.out.println("----------------------------------------------------------------------------------------------------");
+//		repository.save(adminRole);
+//		repository.save(userRole);
+//		repository.save(invitedRole);
 //		};
 //	}
 }

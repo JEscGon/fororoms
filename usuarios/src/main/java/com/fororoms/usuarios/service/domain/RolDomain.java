@@ -1,7 +1,5 @@
 package com.fororoms.usuarios.service.domain;
 
-import com.fororoms.usuarios.repository.entity.Permission;
-import com.fororoms.usuarios.repository.entity.RolEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

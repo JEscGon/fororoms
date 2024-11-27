@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface RolRepository extends CrudRepository<Rol, Long> {
-    List<Rol> findRoleEntitiesByRoleEnumIn(List<String> roleNames);
+    List<Rol> findByRoleEnumIn(List<String> roleNames);
 }
