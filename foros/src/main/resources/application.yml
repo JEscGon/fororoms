@@ -8,9 +8,12 @@ spring:
     import: optional:configserver:http://localhost:8888
   datasource: #Configuracion de la base de datos y jpa
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/fororoms-foros #Crear BD fororoms-foros
+    url: jdbc:mysql://localhost:3306/fororoms-foros #Crear manualmente BD fororoms-foros
     username: root
     password:
+  flyway:  #Configuracion de Flyway
+    locations: classpath:db/migration
+    baseline-on-migrate: true
   jpa:
     hibernate:
       ddl-auto: update
@@ -29,3 +32,9 @@ springdoc: #Configuracion de Swagger
   swagger-ui:
     path: /swagger/swagger-ui.html
 
+logging:
+  file-name: logs/application.log
+  level:
+    root: INFO
+    org.springframework: INFO
+    org.flywaydb: DEBUG

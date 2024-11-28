@@ -18,13 +18,26 @@ public class Foro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 100)
     private String titulo;
-    private String autor;
 
+    // Relacionamos el foro con el usuario mediante el ID del usuario creador
+    @Column(name = "usuario_id", nullable = false)
+    private Long usuarioId;
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaEdicion;
 
-//    @OneToMany(mappedBy = "foro", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Post> posts;
+    //Se ejecuta automáticamente antes de insertar un nuevo registro
+    @PrePersist
+    public void prePersist() {
+        fechaCreacion = LocalDateTime.now();
+    }
 
+    //Se ejecuta automáticamente antes de actualizar un registro existente
+    @PreUpdate
+    public void preUpdate() {
+        fechaEdicion = LocalDateTime.now();
+    }
 }

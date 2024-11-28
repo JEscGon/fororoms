@@ -33,7 +33,6 @@ public class MensajeController {
         if(post == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
         MensajeDomain mensaje = modelMapper.map(mensajeDTO, MensajeDomain.class);
         mensaje.setPost(post);
         mensajeService.save(postId,null, mensaje);

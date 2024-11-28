@@ -1,7 +1,6 @@
 package com.fororoms.foros.controller;
 
 
-import com.fororoms.foros.controller.dto.ForoRequest;
 import com.fororoms.foros.controller.dto.ForoDTO;
 import com.fororoms.foros.service.domain.ForoDomain;
 import com.fororoms.foros.service.ForoService;
@@ -25,7 +24,7 @@ public class ForoController {
     private ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<ForoDTO> crearForo(@RequestBody ForoRequest foroRequest) {
+    public ResponseEntity<ForoDTO> crearForo(@RequestBody ForoDTO foroRequest) {
         ForoDomain foroDomain = modelMapper.map(foroRequest, ForoDomain.class);
         foroService.crearForo(foroDomain);
         ForoDTO foroDTO = modelMapper.map(foroDomain, ForoDTO.class);
@@ -49,7 +48,7 @@ public class ForoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ForoDTO> actualizarForo(@PathVariable Long id, @RequestBody ForoRequest foroRequest) {
+    public ResponseEntity<ForoDTO> actualizarForo(@PathVariable Long id, @RequestBody ForoDTO foroRequest) {
         ForoDomain foroDomain = modelMapper.map(foroRequest, ForoDomain.class);
         foroService.actualizarForo(id, foroDomain);
         ForoDTO foroDTO = modelMapper.map(foroDomain, ForoDTO.class);

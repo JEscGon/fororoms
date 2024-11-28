@@ -45,6 +45,7 @@ public class ForoJpaImpl implements IForo {
                 modelMapper.map(foroDomain, foro);
                 foro.setFechaEdicion(LocalDateTime.now());
                 foro.setFechaCreacion(aux);
+                foro.setUsuarioId(foro.getUsuarioId());
                 foro.setId(id);
             } else {
                 throw new RuntimeException("Foro no encontrado");
@@ -52,6 +53,7 @@ public class ForoJpaImpl implements IForo {
         } else {
             foro = modelMapper.map(foroDomain, Foro.class);
             foro.setFechaCreacion(LocalDateTime.now());
+            foro.setUsuarioId(foro.getUsuarioId());
         }
         foroRepository.save(foro);
         return modelMapper.map(foro, ForoDomain.class);

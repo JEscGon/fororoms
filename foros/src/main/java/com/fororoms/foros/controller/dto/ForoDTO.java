@@ -13,7 +13,7 @@ public class ForoDTO {
 
     private Long id;
     private String titulo;
-    private String autor;
+    private Long usuarioId;
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaEdicion;
 
