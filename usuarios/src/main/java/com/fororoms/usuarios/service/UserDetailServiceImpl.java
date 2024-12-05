@@ -23,6 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -46,17 +48,17 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User userEntity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario: " + username + " no encontrado"));
-        // -- Configuración de roles y permisos --
+        // -- Configuración de roles --
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
 
         userEntity.getRole()
                 .forEach(role -> authorityList.add(new SimpleGrantedAuthority(role.getRoleEnum().name())));
-//TODO: arreglar tema permisos
-        userEntity.getRole().stream()
-                .flatMap(role -> role.getPermissionList().stream())
-                .forEach(permission -> authorityList.add(new SimpleGrantedAuthority(permission.getName())));
+
 
         return new UserDetails() {
+//            public Long getId() {
+//                return userEntity.getId();
+//            }
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
                 return authorityList;
@@ -104,8 +106,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
         String accessToken = jwtUtils.createToken(authentication);
 
         return new AuthResponse(username, "User Access OK", accessToken, true);
-
-
     }
 
     private Authentication authenticate(String username, String password) {
@@ -130,7 +130,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         }
         User userEntity = User.builder()
                 .username(authCreateUserRequest.username())
-                .password(passwordEncoder.encode(password))
+                .password(passwordEncoder.encode(authCreateUserRequest.password()))
                 .role(roleEntitySet)
                 .nombre(authCreateUserRequest.nombre())
                 .apellidos(authCreateUserRequest.apellidos())
@@ -149,5 +149,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         userRepository.save(userEntity);
     }
+
 
 }

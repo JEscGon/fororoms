@@ -17,10 +17,9 @@ spring:
     password:
   flyway: #Configuracion de Flyway
     locations: classpath:db/migration
-    baseline-on-migrate: true
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     database: mysql
     show-sql: true
     database-platform: org.hibernate.dialect.MySQLDialect

@@ -25,19 +25,21 @@ public class JwtUtils {
     private String userGenerator;
 
     public String createToken(Authentication authentication) {
-
         Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
 
         String username = authentication.getPrincipal().toString();
-
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
+
+//TODO : AÑADIR USERID AL TOKEN
+
 
         String jwtToken = JWT.create()
                 .withIssuer(this.userGenerator)
                 .withSubject(username)
                 .withClaim("authorities", authorities)
+                //.withClaim("userId", userId) // Aquí se agrega el userId como claim
                 .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date( System.currentTimeMillis() + 1800000))
                 .withJWTId(UUID.randomUUID().toString())
@@ -46,7 +48,6 @@ public class JwtUtils {
 
         return jwtToken;
     }
-
     public DecodedJWT validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
@@ -65,11 +66,11 @@ public class JwtUtils {
     public String extractUsername(DecodedJWT decodedJWT) {
         return decodedJWT.getSubject().toString();
     }
-
     public Claim getSpecificClaim(DecodedJWT decodedJWT, String claimName) {
         return decodedJWT.getClaim(claimName);
     }
     public Map<String, Claim> getAllClaims(DecodedJWT decodedJWT) {
         return decodedJWT.getClaims();
     }
+
 }
