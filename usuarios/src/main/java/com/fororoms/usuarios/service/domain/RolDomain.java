@@ -14,5 +14,4 @@ import java.util.Set;
 public class RolDomain {
     private Long id;
     private RolEnum roleEnum;
-    private Set<PermissionDomain> permissionList;
 }

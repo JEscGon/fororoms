@@ -4,6 +4,7 @@ package com.fororoms.usuarios.service;
 import com.fororoms.usuarios.controller.dto.AuthCreateUserRequest;
 import com.fororoms.usuarios.controller.dto.AuthLoginRequest;
 import com.fororoms.usuarios.controller.dto.AuthResponse;
+import com.fororoms.usuarios.repository.entity.CustomUserDetails;
 import com.fororoms.usuarios.repository.entity.Rol;
 import com.fororoms.usuarios.repository.RolRepository;
 import com.fororoms.usuarios.repository.UsuarioRepository;
@@ -50,48 +51,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario: " + username + " no encontrado"));
         // -- Configuración de roles --
         List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
-
         userEntity.getRole()
                 .forEach(role -> authorityList.add(new SimpleGrantedAuthority(role.getRoleEnum().name())));
 
-
-        return new UserDetails() {
-//            public Long getId() {
-//                return userEntity.getId();
-//            }
-            @Override
-            public Collection<? extends GrantedAuthority> getAuthorities() {
-                return authorityList;
-            }
-            @Override
-            public String getPassword() {
-                return userEntity.getPassword();
-            }
-            @Override
-            public String getUsername() {
-                return userEntity.getUsername();
-            }
-            @Override
-            public boolean isAccountNonExpired() {
-                return true;
-            }
-            @Override
-            public boolean isAccountNonLocked() {
-                return true;
-            }
-            @Override
-            public boolean isCredentialsNonExpired() {
-                return true;
-            }
-            @Override
-            public boolean isEnabled() {
-                return true;
-            }
-            @Override
-            public String toString() {
-                return userEntity.getUsername();
-            }
-        };
+        return new CustomUserDetails(userEntity.getId(), userEntity.getUsername(), userEntity.getPassword(), authorityList);
     }
 
     public AuthResponse loginUser(AuthLoginRequest authLoginRequest) {

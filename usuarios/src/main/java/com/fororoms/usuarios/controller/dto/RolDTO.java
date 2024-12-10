@@ -14,5 +14,5 @@ import java.util.Set;
 public class RolDTO {
     private Long id;
     private String roleEnum;
-    private Set<PermissionDTO> permissionList;
+
 }
