@@ -38,3 +38,11 @@ logging:
     root: INFO
     org.springframework: INFO
     org.flywaydb: DEBUG
+
+# Configuracion de seguridad de la aplicacion
+security: #Configuracion de seguridad de la aplicacion
+  jwt:
+    key:
+      private: a7b1e437eb8db7ba1801ea13b7c329ed07c0579db9b240f4d9bc6114469aef43
+    user:
+      generator: OAUTH0JWT-BACKEND

@@ -27,15 +27,15 @@ public class MensajeController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("/post/{postId}")
-    public ResponseEntity<MensajeDTO> crearMensaje(@PathVariable Long postId, @RequestBody MensajeDTO mensajeDTO) {
+    @PostMapping("/new/{postId}")
+    public ResponseEntity<MensajeDTO> crearMensaje(@RequestHeader("Authorization") String authorization, @PathVariable Long postId, @RequestBody MensajeDTO mensajeDTO) {
         PostDomain post = postService.obtenerPostPorId(postId);
-        if(post == null){
+        if (post == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         MensajeDomain mensaje = modelMapper.map(mensajeDTO, MensajeDomain.class);
         mensaje.setPost(post);
-        mensajeService.save(postId,null, mensaje);
+        mensajeService.save(authorization, postId, null, mensaje);
         MensajeDTO mensajeResponse = modelMapper.map(mensaje, MensajeDTO.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(mensajeResponse);
     }
@@ -57,11 +57,11 @@ public class MensajeController {
     }
 
     @PutMapping("/{mensajeId}")
-    public ResponseEntity<Mensaje> actualizarMensaje(@PathVariable Long mensajeId, @RequestBody MensajeDTO mensajeDTO) {
+    public ResponseEntity<Mensaje> actualizarMensaje(@RequestHeader String authorization,@PathVariable Long mensajeId, @RequestBody MensajeDTO mensajeDTO) {
         MensajeDomain mensajeDomain = modelMapper.map(mensajeDTO, MensajeDomain.class);
         mensajeDomain.setPost(mensajeService.obtenerMensajePorId(mensajeId).getPost());
-        mensajeService.save(null, mensajeId, mensajeDomain);
-        mensajeDomain = mensajeService.save(null, mensajeId, mensajeDomain);
+        mensajeService.save(authorization,null, mensajeId, mensajeDomain);
+        mensajeDomain = mensajeService.save(authorization,null, mensajeId, mensajeDomain);
         MensajeDTO response = modelMapper.map(mensajeDomain, MensajeDTO.class);
         return ResponseEntity.ok(modelMapper.map(mensajeDomain, Mensaje.class));
     }

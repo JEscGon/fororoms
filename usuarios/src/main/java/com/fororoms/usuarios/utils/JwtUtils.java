@@ -33,34 +33,29 @@ public class JwtUtils {
 
     public String createToken(Authentication authentication) {
 
-    Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
-
-    Object principal = authentication.getPrincipal();
-    Long userId = null;
-    String username = null;
-
-    if (principal instanceof CustomUserDetails) {
-        CustomUserDetails userDetails = (CustomUserDetails) principal;
-        userId = userDetails.getId();
-        username = userDetails.getUsername();
-    }
-
-    String authorities = authentication.getAuthorities().stream()
-            .map(GrantedAuthority::getAuthority)
-            .collect(Collectors.joining(","));
-
-    String jwtToken = JWT.create()
-            .withIssuer(this.userGenerator)
-            .withSubject(username)
-            .withClaim("authorities", authorities)
-            .withClaim("userId", userId != null ? userId.toString() : null)
-            .withIssuedAt(new Date(System.currentTimeMillis()))
-            .withExpiresAt(new Date(System.currentTimeMillis() + 1800000))
-            .withJWTId(UUID.randomUUID().toString())
-            .withNotBefore(new Date(System.currentTimeMillis()))
-            .sign(algorithm);
-
-    return jwtToken;
+        Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
+        Object principal = authentication.getPrincipal();
+        Long userId = null;
+        String username = null;
+        if (principal instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) principal;
+            userId = userDetails.getId();
+            username = userDetails.getUsername();
+        }
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+        String jwtToken = JWT.create()
+                .withIssuer(this.userGenerator)
+                .withSubject(username)
+                .withClaim("authorities", authorities)
+                .withClaim("userId", userId != null ? userId.toString() : null)
+                .withIssuedAt(new Date(System.currentTimeMillis()))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1800000))
+                .withJWTId(UUID.randomUUID().toString())
+                .withNotBefore(new Date(System.currentTimeMillis()))
+                .sign(algorithm);
+        return jwtToken;
     }
     public DecodedJWT validateToken(String token) {
         try {
@@ -86,5 +81,8 @@ public class JwtUtils {
     public Map<String, Claim> getAllClaims(DecodedJWT decodedJWT) {
         return decodedJWT.getClaims();
     }
-
+    public Long extractUserId(DecodedJWT decodedJWT) {
+        Claim userIdClaim = decodedJWT.getClaim("userId");
+        return userIdClaim != null ? userIdClaim.asLong() : null;
+    }
 }

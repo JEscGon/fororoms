@@ -1,12 +1,15 @@
 package com.fororoms.foros.repository.jpaimpl;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fororoms.foros.repository.PostRepository;
 import com.fororoms.foros.repository.entity.Post;
 import com.fororoms.foros.repository.interfaces.IPost;
 import com.fororoms.foros.service.domain.PostDomain;
+import com.fororoms.foros.utils.JwtUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,9 +23,13 @@ public class PostJpaImpl implements IPost {
     private PostRepository postRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Override
-    public PostDomain save(Long foroId,Long postId, PostDomain postDomain) {
+    public PostDomain save(@RequestHeader("Authorization") String token, Long foroId, Long postId, PostDomain postDomain) {
+        DecodedJWT decodedJWT = jwtUtils.validateToken(token.replace("Bearer ", ""));
+        String userId = jwtUtils.extractUserId(decodedJWT);
         Post post;
         if (postId != null){
             Optional<Post> postEntity = postRepository.findById(postId);
@@ -32,13 +39,15 @@ public class PostJpaImpl implements IPost {
                 modelMapper.map(postDomain, post);
                 post.setFechaEdicion(LocalDateTime.now());
                 post.setFechaCreacion(aux);
-                post.setId(postId);
+                post.setUsuarioId(Long.valueOf(userId));
+                //TODO : validacion userID con el token si no es el mismo ID o admin no puede editar.
             }else{
                 throw new RuntimeException("Post no encontrado");
             }
         } else {
             post = modelMapper.map(postDomain, Post.class);
             post.setFechaCreacion(LocalDateTime.now());
+            post.setUsuarioId(Long.valueOf(userId));
         }
         postRepository.save(post);
         return modelMapper.map(post, PostDomain.class);

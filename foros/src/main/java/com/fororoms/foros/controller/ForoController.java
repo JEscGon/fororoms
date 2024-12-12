@@ -4,6 +4,7 @@ package com.fororoms.foros.controller;
 import com.fororoms.foros.controller.dto.ForoDTO;
 import com.fororoms.foros.service.domain.ForoDomain;
 import com.fororoms.foros.service.ForoService;
+import com.fororoms.foros.utils.JwtUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +19,16 @@ import java.util.stream.Collectors;
 public class ForoController {
 
     @Autowired
+    private JwtUtils jwtUtils;
+    @Autowired
     private ForoService foroService;
-
     @Autowired
     private ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<ForoDTO> crearForo(@RequestBody ForoDTO foroRequest) {
+    public ResponseEntity<ForoDTO> crearForo(@RequestHeader("Authorization") String authorization, @RequestBody ForoDTO foroRequest) {
         ForoDomain foroDomain = modelMapper.map(foroRequest, ForoDomain.class);
-        foroService.crearForo(foroDomain);
+        foroService.crearForo(authorization, foroDomain);
         ForoDTO foroDTO = modelMapper.map(foroDomain, ForoDTO.class);
         return ResponseEntity.ok(foroDTO);
     }
@@ -48,9 +50,9 @@ public class ForoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ForoDTO> actualizarForo(@PathVariable Long id, @RequestBody ForoDTO foroRequest) {
+    public ResponseEntity<ForoDTO> actualizarForo(@RequestHeader("Authorization") String authorization, @PathVariable Long id, @RequestBody ForoDTO foroRequest) {
         ForoDomain foroDomain = modelMapper.map(foroRequest, ForoDomain.class);
-        foroService.actualizarForo(id, foroDomain);
+        foroService.actualizarForo(authorization, id, foroDomain);
         ForoDTO foroDTO = modelMapper.map(foroDomain, ForoDTO.class);
         return ResponseEntity.ok(foroDTO);
     }

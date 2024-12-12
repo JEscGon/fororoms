@@ -26,15 +26,16 @@ public class PostController {
     @Autowired
     private ModelMapper modelMapper;
 
+    //TODO: limpiar el controlador de validaciones innecesarias y pasarlas a servicio.
     @PostMapping("/new/{foroId}")
-    public ResponseEntity<PostDTO> crearPost(@PathVariable Long foroId, @RequestBody PostDTO postDTO) {
+    public ResponseEntity<PostDTO> crearPost(@RequestHeader String authorization, @PathVariable Long foroId, @RequestBody PostDTO postDTO) {
         ForoDomain foro = foroService.obtenerForoPorId(foroId);
         if(foro == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         PostDomain postDomain = modelMapper.map(postDTO, PostDomain.class);
         postDomain.setForo(foro);
-        postService.crearPost(foroId,postDomain);
+        postService.crearPost(authorization,foroId,postDomain);
         PostDTO postResponse = modelMapper.map(postDomain, PostDTO.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(postResponse);
     }
@@ -55,11 +56,12 @@ public class PostController {
         return ResponseEntity.ok(postResponse);
     }
 
+    //TODO: limpiar el controlador de validaciones innecesarias y pasarlas a servicio.
     @PutMapping("/{postId}")
-    public ResponseEntity<PostDTO> actualizarPost(@PathVariable Long postId, @RequestBody PostDTO postDTO) {
+    public ResponseEntity<PostDTO> actualizarPost(@RequestHeader String authorization,@PathVariable Long postId, @RequestBody PostDTO postDTO) {
         PostDomain postDomain = modelMapper.map(postDTO, PostDomain.class);
         postDomain.setForo(postService.obtenerPostPorId(postId).getForo());
-        postService.actualizarPost(postId, postDomain);
+        postService.actualizarPost(authorization, postId, postDomain);
         PostDTO response = modelMapper.map(postDomain, PostDTO.class);
         return ResponseEntity.ok(response);
     }

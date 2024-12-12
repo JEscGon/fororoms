@@ -1,7 +1,9 @@
 package com.fororoms.foros.service;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fororoms.foros.repository.interfaces.IMensaje;
 import com.fororoms.foros.service.domain.MensajeDomain;
+import com.fororoms.foros.utils.JwtUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,11 +15,9 @@ public class MensajeService {
 
     @Autowired
     private IMensaje mensajeRepository;
-    @Autowired
-    private ModelMapper modelMapper;
 
-    public void save(Long postId, MensajeDomain mensaje) {
-        mensajeRepository.save(postId,null , mensaje);
+    public void save(String jwt ,Long postId, MensajeDomain mensaje) {
+        mensajeRepository.save(jwt,postId,null , mensaje);
     }
 
     public MensajeDomain obtenerMensajePorId(Long id) {
@@ -28,8 +28,8 @@ public class MensajeService {
         return mensajeRepository.listarMensajesPorPost(postId);
     }
 
-    public MensajeDomain actualizarMensaje(Long idMsg, MensajeDomain mensajeActualizado) {
-        return mensajeRepository.save(null,idMsg, mensajeActualizado);
+    public MensajeDomain actualizarMensaje(String jwt ,Long idMsg, MensajeDomain mensajeActualizado) {
+        return mensajeRepository.save(jwt,null,idMsg, mensajeActualizado);
     }
 
     public void eliminarMensaje(Long id) {

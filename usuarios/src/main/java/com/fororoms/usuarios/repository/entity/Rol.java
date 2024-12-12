@@ -24,6 +24,4 @@ public class Rol {
     @Enumerated(EnumType.STRING)
     private RolEnum roleEnum;
 
-
-
 }

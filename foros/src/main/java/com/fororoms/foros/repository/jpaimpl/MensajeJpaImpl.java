@@ -1,12 +1,17 @@
 package com.fororoms.foros.repository.jpaimpl;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fororoms.foros.repository.MensajeRepository;
+import com.fororoms.foros.repository.PostRepository;
 import com.fororoms.foros.repository.entity.Mensaje;
+import com.fororoms.foros.repository.entity.Post;
 import com.fororoms.foros.repository.interfaces.IMensaje;
 import com.fororoms.foros.service.domain.MensajeDomain;
+import com.fororoms.foros.utils.JwtUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,11 +24,20 @@ public class MensajeJpaImpl implements IMensaje {
     @Autowired
     private MensajeRepository mensajeRepository;
     @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Override
-    public MensajeDomain save(Long postId, Long msgId, MensajeDomain mensajeDomain) {
+    public MensajeDomain save(@RequestHeader("Authorization") String token, Long postId, Long msgId, MensajeDomain mensajeDomain) {
+
+        DecodedJWT decodedJWT = jwtUtils.validateToken(token.replace("Bearer ", ""));
+        String userId = String.valueOf(jwtUtils.extractUserId(decodedJWT));
         Mensaje mensaje;
+
         if(msgId != null){
             Optional<Mensaje> mensajeEntity = mensajeRepository.findById(msgId);
             if(mensajeEntity.isPresent()) {
@@ -33,12 +47,16 @@ public class MensajeJpaImpl implements IMensaje {
                 mensaje.setId(msgId);
                 mensaje.setFechaEdicion(LocalDateTime.now());
                 mensaje.setFechaPublicacion(aux);
+                mensaje.setUsuarioId(Long.valueOf(userId));
+
             }else{
                 throw new RuntimeException("Mensaje no encontrado");
             }
         }else{
             mensaje = modelMapper.map(mensajeDomain, Mensaje.class);
             mensaje.setFechaPublicacion(LocalDateTime.now());
+            mensaje.setUsuarioId(Long.valueOf(userId));
+
         }
         mensajeRepository.save(mensaje);
         return modelMapper.map(mensaje, MensajeDomain.class);

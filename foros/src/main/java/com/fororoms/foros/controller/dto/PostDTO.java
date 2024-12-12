@@ -1,6 +1,5 @@
 package com.fororoms.foros.controller.dto;
 
-import com.fororoms.foros.repository.entity.Foro;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
