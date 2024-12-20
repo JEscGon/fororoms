@@ -32,7 +32,6 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 
         // Get the token from the request
         String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
-
         // Validate the token  Bearer dsfhgdshfsehfdsfgsfyh43tyges4st
         if (jwtToken != null) {
             jwtToken = jwtToken.substring(7);
@@ -46,7 +45,6 @@ public class JwtTokenValidator extends OncePerRequestFilter {
             context.setAuthentication(authentication);
             SecurityContextHolder.setContext(context);
         }
-
         // Continue with the filter chain
         filterChain.doFilter(request, response);
     }

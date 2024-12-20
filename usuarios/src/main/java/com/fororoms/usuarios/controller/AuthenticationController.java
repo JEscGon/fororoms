@@ -1,6 +1,7 @@
 package com.fororoms.usuarios.controller;
 
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.fororoms.usuarios.controller.dto.AuthCreateUserRequest;
 import com.fororoms.usuarios.controller.dto.AuthLoginRequest;
 import com.fororoms.usuarios.controller.dto.AuthResponse;
@@ -15,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @PreAuthorize("permitAll()")
@@ -38,6 +36,18 @@ public class AuthenticationController {
     @PostMapping("/log-in")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginRequest userRequest) {
         return new ResponseEntity<>(this.userDetailService.loginUser(userRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/validate-token")
+    public ResponseEntity<Void> validateToken(@RequestHeader("Authorization") String token) {
+        try {
+            this.userDetailService.validateToken(token);
+        } catch (JWTVerificationException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

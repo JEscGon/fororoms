@@ -85,4 +85,5 @@ public class JwtUtils {
         Claim userIdClaim = decodedJWT.getClaim("userId");
         return userIdClaim != null ? userIdClaim.asLong() : null;
     }
+
 }

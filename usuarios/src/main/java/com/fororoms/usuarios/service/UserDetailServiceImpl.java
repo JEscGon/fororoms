@@ -12,6 +12,7 @@ import com.fororoms.usuarios.repository.UsuarioRepository;
 import com.fororoms.usuarios.repository.entity.User;
 import com.fororoms.usuarios.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +36,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
-
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -113,5 +114,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
         userRepository.save(userEntity);
     }
 
+    public void validateToken(String token) {
+        jwtUtils.validateToken(token);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }

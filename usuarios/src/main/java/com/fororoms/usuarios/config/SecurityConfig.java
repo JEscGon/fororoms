@@ -1,5 +1,7 @@
 package com.fororoms.usuarios.config;
 
+import com.fororoms.usuarios.service.UserDetailServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +29,9 @@ import java.util.List;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
+    @Autowired
+    private UserDetailServiceImpl userDetailServiceImpl;
 
 //    @Bean
 //    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -64,28 +69,10 @@ public class SecurityConfig {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(); //conexion DB
         provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService());
+        provider.setUserDetailsService(userDetailServiceImpl);
         return provider;
     }
-    @Bean
-    public UserDetailsService userDetailsService(){
 
-        List<UserDetails> userDetailsList = new ArrayList<>();
-
-        userDetailsList.add(User.withUsername("admin")
-                .password("admin")
-                .roles("ADMIN")
-                .authorities("READ", "CREATE")
-                .build());
-
-        userDetailsList.add(User.withUsername("user")
-                .password("user")
-                .roles("USER")
-                .authorities("READ")
-                .build());
-
-        return new InMemoryUserDetailsManager(userDetailsList);
-    }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
