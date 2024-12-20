@@ -26,6 +26,7 @@ public class PostJpaImpl implements IPost {
     @Autowired
     private JwtUtils jwtUtils;
 
+ //TODO : validacion userID con el token si no es el mismo ID o admin(preauthorice controller) no puede editar.
     @Override
     public PostDomain save(@RequestHeader("Authorization") String token, Long foroId, Long postId, PostDomain postDomain) {
         DecodedJWT decodedJWT = jwtUtils.validateToken(token.replace("Bearer ", ""));
@@ -35,12 +36,14 @@ public class PostJpaImpl implements IPost {
             Optional<Post> postEntity = postRepository.findById(postId);
             if(postEntity.isPresent()) {
                 post = postEntity.get();
+                if (post.getUsuarioId().equals(Long.valueOf(userId)) || decodedJWT.getClaim("roles").asList(String.class).contains("ADMIN")) {
+                    throw new RuntimeException("Usuario no autorizado para editar este post");
+                }
                 LocalDateTime aux = post.getFechaCreacion();
                 modelMapper.map(postDomain, post);
                 post.setFechaEdicion(LocalDateTime.now());
                 post.setFechaCreacion(aux);
-                post.setUsuarioId(Long.valueOf(userId));
-                //TODO : validacion userID con el token si no es el mismo ID o admin no puede editar.
+                post.setUsuarioId(postEntity.get().getUsuarioId());
             }else{
                 throw new RuntimeException("Post no encontrado");
             }
@@ -69,6 +72,7 @@ public class PostJpaImpl implements IPost {
 
     @Override
     public void eliminarPost(Long id) {
+        //TODO : eliminar mensajes relacionados con el post?
         postRepository.deleteById(id);
     }
 

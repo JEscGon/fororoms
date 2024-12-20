@@ -14,11 +14,9 @@ public class MensajeDomain {
 
     private Long id;
     private String contenido;
-
     private LocalDateTime fechaPublicacion;
     private LocalDateTime fechaEdicion;
-
-    //TODO : ver como sacar solo el id de post.
     private PostDomain post;
     private Long usuarioId;
+
 }

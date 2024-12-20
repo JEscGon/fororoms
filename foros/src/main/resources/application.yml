@@ -11,6 +11,10 @@ spring:
     url: jdbc:mysql://localhost:3306/fororoms-foros #Crear manualmente BD fororoms-foros
     username: root
     password:
+  security: #TODO Configuracion de seguridad (PROVISIONAl!)
+    user:
+      name: admin
+      password: admin
   flyway:  #Configuracion de Flyway
     locations: classpath:db/migration
     baseline-on-migrate: true

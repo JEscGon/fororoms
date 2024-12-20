@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class PostController {
     @Autowired
     private ModelMapper modelMapper;
 
-    //TODO: limpiar el controlador de validaciones innecesarias y pasarlas a servicio.
+ //   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/new/{foroId}")
     public ResponseEntity<PostDTO> crearPost(@RequestHeader String authorization, @PathVariable Long foroId, @RequestBody PostDTO postDTO) {
         ForoDomain foro = foroService.obtenerForoPorId(foroId);
@@ -55,8 +56,7 @@ public class PostController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(postResponse);
     }
-
-    //TODO: limpiar el controlador de validaciones innecesarias y pasarlas a servicio.
+    @PreAuthorize("@securityService.isUserIdMatching(#userId) or hasRole('ADMIN')")
     @PutMapping("/{postId}")
     public ResponseEntity<PostDTO> actualizarPost(@RequestHeader String authorization,@PathVariable Long postId, @RequestBody PostDTO postDTO) {
         PostDomain postDomain = modelMapper.map(postDTO, PostDomain.class);
@@ -65,7 +65,7 @@ public class PostController {
         PostDTO response = modelMapper.map(postDomain, PostDTO.class);
         return ResponseEntity.ok(response);
     }
-
+    //@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> eliminarPost(@PathVariable Long postId) {
         postService.eliminarPost(postId);

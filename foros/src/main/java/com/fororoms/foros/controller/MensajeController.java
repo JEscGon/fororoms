@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class MensajeController {
     @Autowired
     private ModelMapper modelMapper;
 
+  //  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PostMapping("/new/{postId}")
     public ResponseEntity<MensajeDTO> crearMensaje(@RequestHeader("Authorization") String authorization, @PathVariable Long postId, @RequestBody MensajeDTO mensajeDTO) {
         PostDomain post = postService.obtenerPostPorId(postId);
@@ -56,6 +58,7 @@ public class MensajeController {
         return ResponseEntity.ok(mensajeResponse);
     }
 
+//    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @PutMapping("/{mensajeId}")
     public ResponseEntity<Mensaje> actualizarMensaje(@RequestHeader String authorization,@PathVariable Long mensajeId, @RequestBody MensajeDTO mensajeDTO) {
         MensajeDomain mensajeDomain = modelMapper.map(mensajeDTO, MensajeDomain.class);
@@ -66,11 +69,11 @@ public class MensajeController {
         return ResponseEntity.ok(modelMapper.map(mensajeDomain, Mensaje.class));
     }
 
+ //   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @DeleteMapping("/{mensajeId}")
     public ResponseEntity<Void> eliminarMensaje(@PathVariable Long mensajeId) {
         mensajeService.eliminarMensaje(mensajeId);
         return ResponseEntity.noContent().build();
     }
-
 
 }

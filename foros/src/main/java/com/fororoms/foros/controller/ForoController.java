@@ -8,6 +8,7 @@ import com.fororoms.foros.utils.JwtUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class ForoController {
     private ModelMapper modelMapper;
 
     @PostMapping
+  //  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<ForoDTO> crearForo(@RequestHeader("Authorization") String authorization, @RequestBody ForoDTO foroRequest) {
         ForoDomain foroDomain = modelMapper.map(foroRequest, ForoDomain.class);
         foroService.crearForo(authorization, foroDomain);
@@ -50,6 +52,7 @@ public class ForoController {
     }
 
     @PutMapping("/{id}")
+  //  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<ForoDTO> actualizarForo(@RequestHeader("Authorization") String authorization, @PathVariable Long id, @RequestBody ForoDTO foroRequest) {
         ForoDomain foroDomain = modelMapper.map(foroRequest, ForoDomain.class);
         foroService.actualizarForo(authorization, id, foroDomain);
@@ -58,6 +61,7 @@ public class ForoController {
     }
 
     @DeleteMapping("/{id}")
+  //  @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<Void> eliminarForo(@PathVariable Long id) {
         foroService.eliminarForo(id);
         return ResponseEntity.ok(null);
